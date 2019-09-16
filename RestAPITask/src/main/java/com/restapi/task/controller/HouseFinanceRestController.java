@@ -36,7 +36,7 @@ public class HouseFinanceRestController {
 	@Autowired
 	private InstituteService instituteService;
 	
-	@GetMapping(value="json/addBulkData")
+	@GetMapping(value="addBulkData")
 	public String addBulkData() {
 		Map<String, Object> map = CSVParser.parser();
 		instituteService.addInstituteList((List<Institute>)map.get("instituteList"));
@@ -44,13 +44,13 @@ public class HouseFinanceRestController {
 		return "OK";
 	}
 	
-	@GetMapping(value="json/listInstitute")
+	@GetMapping(value="listInstitute")
 	public List<Institute> listInstitute(){
 		System.out.println("(2) /housefinance/json/listInstitute : GET");
 		return instituteService.listInstitute();
 	}
 	
-	@GetMapping(value="json/listYearlySum")
+	@GetMapping(value="listYearlySum")
 	public String listYearlySum() throws JsonProcessingException{
 		System.out.println("(3) /housefinance/json/listYearlySum : GET");
 		ObjectMapper objectMapper = GetObjectMapper.getObjectMapper((JsonSerializer<HouseFinanceDTO>)new ListYearlySumSerializer());
@@ -58,7 +58,7 @@ public class HouseFinanceRestController {
 		return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(houseFinanceDTO); 
 	}
 	
-	@GetMapping(value="json/listYearlySumMax/{year}")
+	@GetMapping(value="listYearlySumMax/{year}")
 	public String listYearlySumMax(@PathVariable int year) throws JsonProcessingException {
 		System.out.println("(4) /housefinance/json/listYearlySumMax : GET");
 		ObjectMapper objectMapper = GetObjectMapper.getObjectMapper((JsonSerializer<HouseFinanceDTO>)new ListYearlySumMaxSerializer());
@@ -66,7 +66,7 @@ public class HouseFinanceRestController {
 		return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(houseFinanceDTO); 
 	}
 	
-	@GetMapping(value="json/listYearlyAvgMinMax/{instituteName}")
+	@GetMapping(value="listYearlyAvgMinMax/{instituteName}")
 	public String listYearlyAvgMinMax(@PathVariable  String instituteName) throws JsonProcessingException {
 		System.out.println("(5) /housefinance/json/listYearlyAvgMinMax : GET");
 		ObjectMapper objectMapper = GetObjectMapper.getObjectMapper((JsonSerializer<HouseFinanceDTO>)new ListYearlyAvgMinMaxSerializer());
